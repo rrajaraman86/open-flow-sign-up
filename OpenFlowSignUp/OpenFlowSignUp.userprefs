@@ -1,27 +1,17 @@
 ﻿<Properties StartupConfiguration="{38182FC2-B3E2-47EC-82F8-3123FF6580F8}|Unit Tests">
   <MonoDevelop.Ide.Workbench ActiveDocument="OpenFlowSignUp/SignUpForm.feature">
     <Files>
-      <File FileName="OpenFlowSignUp/SignUpForm.feature" Line="1" Column="1" />
-      <File FileName="OpenFlowSignUp/SignUpFeatureSteps.cs" Line="66" Column="29" />
+      <File FileName="OpenFlowSignUp/SignUpForm.feature" Line="66" Column="47" />
+      <File FileName="OpenFlowSignUp/SignUpFeatureSteps.cs" Line="30" Column="57" />
     </Files>
     <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="OpenFlowSignUp" expanded="True">
-            <Node name="OpenFlowSignUp" expanded="True">
-              <Node name="References" expanded="True" />
-              <Node name="SignUpForm.feature" expanded="True" selected="True" />
-            </Node>
-          </Node>
-        </State>
-      </Pad>
       <Pad Id="MonoDevelop.UnitTesting.TestPad">
         <State name="__root__">
           <Node name="OpenFlowSignUp" expanded="True">
             <Node name="OpenFlowSignUp" expanded="True">
-              <Node name="OpenFlowSignUp" expanded="True" selected="True">
+              <Node name="OpenFlowSignUp" expanded="True">
                 <Node name="SignUpFeature" expanded="True">
-                  <Node name="RegisterNewUser" expanded="True" />
+                  <Node name="ExistingValues" expanded="True" selected="True" />
                 </Node>
               </Node>
             </Node>
@@ -32,9 +22,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/rrajaraman/Documents/GitHub/open-flow-sign-up/OpenFlowSignUp/OpenFlowSignUp/SignUpForm.feature" relfile="OpenFlowSignUp/SignUpForm.feature" line="1" column="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.ItemProperties.OpenFlowSignUp PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

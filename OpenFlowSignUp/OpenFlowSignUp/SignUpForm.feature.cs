@@ -77,20 +77,110 @@ namespace OpenFlowSignUp
                 __tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(__tags, exampleTags));
             }
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Register new user", __tags);
-#line 7
-this.ScenarioSetup(scenarioInfo);
 #line 8
- testRunner.Given("I am on the sign-up page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+this.ScenarioSetup(scenarioInfo);
 #line 9
- testRunner.And(string.Format("I have entered a valid Username {0}", username), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.Given("I am on the sign-up page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 10
-    testRunner.And(string.Format("I have entered a valid Email {0}", email), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And(string.Format("I have entered a valid Username {0}", username), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 11
-    testRunner.And(string.Format("I have entered a valid Password {0}", password), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And(string.Format("I have entered a valid Email {0}", email), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 12
- testRunner.When("I click Register", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+    testRunner.And(string.Format("I have entered a valid Password {0}", password), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 13
+ testRunner.When("I click Register", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 14
  testRunner.Then("I should be signed-in", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Missing required fields")]
+        [NUnit.Framework.TestCaseAttribute("", "email@example.com", "test1234", new string[0])]
+        [NUnit.Framework.TestCaseAttribute("", "email@example.com", "test1234", new string[0])]
+        [NUnit.Framework.TestCaseAttribute("test1234", "", "test1234", new string[0])]
+        [NUnit.Framework.TestCaseAttribute("test1234", "email@example.com", "", new string[0])]
+        [NUnit.Framework.TestCaseAttribute("", "", "test1234", new string[0])]
+        [NUnit.Framework.TestCaseAttribute("test1234", "", "", new string[0])]
+        [NUnit.Framework.TestCaseAttribute("", "email@example.com", "", new string[0])]
+        [NUnit.Framework.TestCaseAttribute("", "", "", new string[0])]
+        public virtual void MissingRequiredFields(string username, string email, string password, string[] exampleTags)
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Missing required fields", exampleTags);
+#line 20
+this.ScenarioSetup(scenarioInfo);
+#line 21
+    testRunner.Given("I am on the sign-up page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 22
+    testRunner.And(string.Format("I leave a required field blank {0} {1} {2}", username, email, password), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 23
+    testRunner.When("I click Register", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 24
+    testRunner.Then("I should see the appropriate error for missing field", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Incorrect field values")]
+        [NUnit.Framework.TestCaseAttribute("a", "email@example.com", "test1234", new string[0])]
+        [NUnit.Framework.TestCaseAttribute("!", "email@example.com", "test1234", new string[0])]
+        [NUnit.Framework.TestCaseAttribute("1", "email@example.com", "test1234", new string[0])]
+        [NUnit.Framework.TestCaseAttribute("anothertest", "email @example.com", "test1234", new string[0])]
+        [NUnit.Framework.TestCaseAttribute("anothertest", "test@@example.com", "test1234", new string[0])]
+        [NUnit.Framework.TestCaseAttribute("test098", "email_test@example.com", "test1", new string[0])]
+        public virtual void IncorrectFieldValues(string username, string email, string password, string[] exampleTags)
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Incorrect field values", exampleTags);
+#line 37
+this.ScenarioSetup(scenarioInfo);
+#line 38
+    testRunner.Given("I am on the sign-up page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 39
+    testRunner.And(string.Format("I enter an invalid value for a field {0} {1} {2}", username, email, password), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 40
+    testRunner.When("I click Register", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 41
+    testRunner.Then("I should see the appropriate error for invalid value", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Existing values")]
+        [NUnit.Framework.TestCaseAttribute("test1234", "newemail@example.com", "test1234", new string[0])]
+        [NUnit.Framework.TestCaseAttribute("32312test1234", "email@example.com", "test1234", new string[0])]
+        public virtual void ExistingValues(string username, string email, string password, string[] exampleTags)
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Existing values", exampleTags);
+#line 52
+this.ScenarioSetup(scenarioInfo);
+#line 53
+    testRunner.Given("I am on the sign-up page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 54
+    testRunner.And(string.Format("I enter an existing value for a field {0} {1} {2}", username, email, password), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 55
+    testRunner.When("I click Register", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 56
+    testRunner.Then("I should see the appropriate error message", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Existing user")]
+        public virtual void ExistingUser()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Existing user", ((string[])(null)));
+#line 63
+this.ScenarioSetup(scenarioInfo);
+#line 64
+    testRunner.Given("I am on the sign-up page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 65
+    testRunner.When("I click on Sign In", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 66
+    testRunner.Then("I should be taken to the sign-in page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
