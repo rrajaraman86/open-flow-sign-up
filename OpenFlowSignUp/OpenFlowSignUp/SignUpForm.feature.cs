@@ -66,7 +66,7 @@ namespace OpenFlowSignUp
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Register new user")]
         [NUnit.Framework.CategoryAttribute("mytag")]
-        [NUnit.Framework.TestCaseAttribute("test1234", "email@example.com", "test1234", new string[0])]
+        [NUnit.Framework.TestCaseAttribute("sampleuser1", "sampleuser1@example.com", "test123", new string[0])]
         public virtual void RegisterNewUser(string username, string email, string password, string[] exampleTags)
         {
             string[] __tags = new string[]

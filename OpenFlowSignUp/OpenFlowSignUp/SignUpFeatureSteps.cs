@@ -39,18 +39,15 @@ namespace OpenFlowSignUp
             driver.Url = signInPage;
             IWebElement registerLinkText = driver.FindElement(By.LinkText("Register"));
             registerLinkText.Click();
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+            AddFiveSecondWait();
         }
 
 		[Given(@"I am on the sign-up page")]         public void GivenIAmOnTheSign_UpPage()         {           Assert.IsTrue(driver.FindElement(By.XPath("/html/body/section/section/div[1]/div[1]/h3")).Text.Equals("Create an Account"));         }
 
         [Given(@"I have entered a valid Username (.*)")]         public void GivenIHaveEnteredAValidUsername(string inputUsername)         {             username = inputUsername;
-			IWebElement usernameField = driver.FindElement(By.Id("at-field-username"));
-			usernameField.SendKeys(username);         }          [Given(@"I have entered a valid Email (.*)")]         public void GivenIHaveEnteredAValidEmail(string inputEmail)         {             email = inputEmail;
-			IWebElement emailField = driver.FindElement(By.Id("at-field-email"));
-			emailField.SendKeys(email);         }          [Given(@"I have entered a valid Password (.*)")]         public void GivenIHaveEnteredAValidPassword(string inputPassword)         {             password = inputPassword;
-			IWebElement passwordField = driver.FindElement(By.Id("at-field-password"));
-			passwordField.SendKeys(password);
+            EnterUsername();         }          [Given(@"I have entered a valid Email (.*)")]         public void GivenIHaveEnteredAValidEmail(string inputEmail)         {             email = inputEmail;
+            EnterEmail();         }          [Given(@"I have entered a valid Password (.*)")]         public void GivenIHaveEnteredAValidPassword(string inputPassword)         {             password = inputPassword;
+            EnterPassword();
 		}
 
 		[Given(@"I leave a required field blank (.*) (.*) (.*)")]
@@ -62,14 +59,9 @@ namespace OpenFlowSignUp
             email = inputEmail;
             password = inputPassword;
 
-			IWebElement usernameField = driver.FindElement(By.Id("at-field-username"));
-			usernameField.SendKeys(username);
-
-			IWebElement emailField = driver.FindElement(By.Id("at-field-email"));
-			emailField.SendKeys(email);
-
-			IWebElement passwordField = driver.FindElement(By.Id("at-field-password"));
-			passwordField.SendKeys(password);
+            EnterUsername();
+            EnterEmail();
+            EnterPassword();
 		}
 
 		[Given(@"I enter an invalid value for a field (.*) (.*) (.*)")]
@@ -81,14 +73,9 @@ namespace OpenFlowSignUp
 			email = inputEmail;
 			password = inputPassword;
 
-			IWebElement usernameField = driver.FindElement(By.Id("at-field-username"));
-			usernameField.SendKeys(username);
-
-			IWebElement emailField = driver.FindElement(By.Id("at-field-email"));
-			emailField.SendKeys(email);
-
-			IWebElement passwordField = driver.FindElement(By.Id("at-field-password"));
-			passwordField.SendKeys(password);
+            EnterUsername();
+            EnterEmail();
+            EnterPassword();
 		}
 
 		[Given(@"I enter an existing value for a field (.*) (.*) (.*)")]
@@ -100,26 +87,21 @@ namespace OpenFlowSignUp
 			email = inputEmail;
 			password = inputPassword;
 
-			IWebElement usernameField = driver.FindElement(By.Id("at-field-username"));
-			usernameField.SendKeys(username);
-
-			IWebElement emailField = driver.FindElement(By.Id("at-field-email"));
-			emailField.SendKeys(email);
-
-			IWebElement passwordField = driver.FindElement(By.Id("at-field-password"));
-			passwordField.SendKeys(password);
+            EnterUsername();
+            EnterEmail();
+            EnterPassword();
 		}
          [When(@"I click Register")]         public void WhenIClickRegister()         {
 			IWebElement registerLinkText = driver.FindElement(By.Id("at-btn"));
 			registerLinkText.Click();
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);         }
+            AddFiveSecondWait();         }
 
 		[When(@"I click on Sign In")]
 		public void WhenIClickOnSignIn()
 		{
 			IWebElement signInButton = driver.FindElement(By.Id("at-signIn"));
             signInButton.Click();
-			driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+			AddFiveSecondWait();
 		}
 
         [When(@"I select a Language from the dropdown (.*)")]
@@ -128,7 +110,7 @@ namespace OpenFlowSignUp
             languageId = inputId;
             IWebElement languageField = driver.FindElement(By.ClassName("at-form-lang"));
             languageField.FindElement(By.XPath($"/html/body/section/section/div[2]/select/option[{languageId}]")).Click();
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+            AddFiveSecondWait();
 
 			switch (languageId)
 			{
@@ -169,16 +151,16 @@ namespace OpenFlowSignUp
 					userNameDisplay = "아이디";
 					emailDisplay = "Email";
 					passwordDisplay = "비밀번호";
-					registerButtonDisplay = "Register";
-					alreadyHaveAccountDisplay = "If you already have an account sign in";
+					registerButtonDisplay = "회원가입";
+					alreadyHaveAccountDisplay = "이미 계정이 있으시면 로그인";
 					break;
 				default:
 					pageTitle = "Create an Account";
 					userNameDisplay = "Username";
 					emailDisplay = "Email";
 					passwordDisplay = "Password";
-					registerButtonDisplay = "회원가입";
-					alreadyHaveAccountDisplay = "I이미 계정이 있으시면로그인";
+					registerButtonDisplay = "Register";
+					alreadyHaveAccountDisplay = "If you already have an account sign in";
 					break;
 			}
 		}          [Then(@"I should be signed-in")]         public void ThenIShouldBeSigned_In()         {
@@ -263,33 +245,56 @@ namespace OpenFlowSignUp
 			//Username
 			IWebElement usernameField = driver.FindElement(By.Id("at-field-username"));
 			Assert.IsTrue(usernameField.Displayed);
-			//Assert.AreEqual(username, usernameField.Text);
+			Assert.AreEqual(username, usernameField.Text);
 
 			//Email
 			IWebElement emailField = driver.FindElement(By.Id("at-field-email"));
 			Assert.IsTrue(emailField.Displayed);
-			//Assert.AreEqual(email, emailField.Text);
+			Assert.AreEqual(email, emailField.Text);
 
 			//Password
 			IWebElement passwordField = driver.FindElement(By.Id("at-field-password"));
 			Assert.IsTrue(passwordField.Displayed);
-			//Assert.AreEqual(password, passwordField.Text);
+			Assert.AreEqual(password, passwordField.Text);
 
 			//Register Button
 			IWebElement registerButton = driver.FindElement(By.Id("at-btn"));
 			Assert.IsTrue(registerButton.Displayed);
-			//Assert.AreEqual(registerbutton, registerButton.Text);
+			Assert.AreEqual(registerButtonDisplay, registerButton.Text);
 
 			//Already have an account?
 			IWebElement alreadyHaveAccount = driver.FindElement(By.XPath("/html/body/section/section/div[1]/div[3]/p"));
 			Assert.IsTrue(alreadyHaveAccount.Displayed);
 			string alreadyHaveAccountText = alreadyHaveAccount.Text;
-			//Assert.AreEqual(alreadyhaveaccount, alreadyHaveAccountText);
+			Assert.AreEqual(alreadyHaveAccountDisplay, alreadyHaveAccountText);
 
 			//Language Dropdown
 			IWebElement languageOptions = driver.FindElement(By.XPath("/html/body/section/section/div[2]/select"));
 			Assert.IsTrue(languageOptions.Displayed);
 		}
+
+        public void AddFiveSecondWait()
+        {
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+        }
+
+		public void EnterUsername()
+		{
+			IWebElement usernameField = driver.FindElement(By.Id("at-field-username"));
+			usernameField.SendKeys(username);
+		}
+
+        public void EnterEmail()
+        {
+			IWebElement emailField = driver.FindElement(By.Id("at-field-email"));
+			emailField.SendKeys(email);
+        }
+
+        public void EnterPassword()
+        {
+			IWebElement passwordField = driver.FindElement(By.Id("at-field-password"));
+			passwordField.SendKeys(password);
+        }
 
 		[AfterScenario]
 		public void CloseBrowser()

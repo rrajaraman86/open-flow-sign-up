@@ -1,8 +1,8 @@
 ﻿<Properties StartupConfiguration="{38182FC2-B3E2-47EC-82F8-3123FF6580F8}|Unit Tests">
-  <MonoDevelop.Ide.Workbench ActiveDocument="OpenFlowSignUp/SignUpFeatureSteps.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="OpenFlowSignUp/SignUpForm.feature">
     <Files>
-      <File FileName="OpenFlowSignUp/SignUpForm.feature" Line="79" Column="9" />
-      <File FileName="OpenFlowSignUp/SignUpFeatureSteps.cs" Line="7" Column="25" />
+      <File FileName="OpenFlowSignUp/SignUpForm.feature" Line="18" Column="32" />
+      <File FileName="OpenFlowSignUp/SignUpFeatureSteps.cs" Line="186" Column="75" />
     </Files>
     <Pads>
       <Pad Id="MonoDevelop.UnitTesting.TestPad">
@@ -11,8 +11,13 @@
             <Node name="OpenFlowSignUp" expanded="True">
               <Node name="OpenFlowSignUp" expanded="True">
                 <Node name="SignUpFeature" expanded="True">
-                  <Node name="LanguageSelection" expanded="True" selected="True" />
+                  <Node name="ExistingValues" expanded="True" />
+                  <Node name="IncorrectFieldValues" expanded="True" />
+                  <Node name="LanguageSelection" expanded="True" />
+                  <Node name="MissingRequiredFields" expanded="True" />
+                  <Node name="RegisterNewUser" expanded="True" selected="True" />
                 </Node>
+                <Node name="Test" expanded="True" />
               </Node>
             </Node>
           </Node>

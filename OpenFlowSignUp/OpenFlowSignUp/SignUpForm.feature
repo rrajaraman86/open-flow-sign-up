@@ -15,7 +15,7 @@ Scenario Outline: Register new user
 
     Examples:
     |username       |email             |password|
-    |test1234|email@example.com|test1234|
+    |sampleuser1|sampleuser1@example.com|test123|
 
 Scenario Outline: Missing required fields
     Given I am on the sign-up page
