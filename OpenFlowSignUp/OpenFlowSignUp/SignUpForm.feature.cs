@@ -184,6 +184,28 @@ this.ScenarioSetup(scenarioInfo);
 #line hidden
             this.ScenarioCleanup();
         }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Language Selection")]
+        [NUnit.Framework.TestCaseAttribute("1", new string[0])]
+        [NUnit.Framework.TestCaseAttribute("5", new string[0])]
+        [NUnit.Framework.TestCaseAttribute("11", new string[0])]
+        [NUnit.Framework.TestCaseAttribute("21", new string[0])]
+        [NUnit.Framework.TestCaseAttribute("36", new string[0])]
+        public virtual void LanguageSelection(string id, string[] exampleTags)
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Language Selection", exampleTags);
+#line 68
+this.ScenarioSetup(scenarioInfo);
+#line 69
+    testRunner.Given("I am on the sign-up page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 70
+    testRunner.When(string.Format("I select a Language from the dropdown {0}", id), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 71
+    testRunner.Then("I should see the correct values for the other fields", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
     }
 }
 #pragma warning restore

@@ -20,6 +20,9 @@ namespace OpenFlowSignUp
         string email = string.Empty;
         string password = string.Empty;
 
+		string language = string.Empty;
+        int languageId = 5;             //default language: English
+
 		static string expectedImageSrc = $"{homePage}/wekan-logo.png";
 
         string pageTitle = string.Empty;
@@ -30,50 +33,14 @@ namespace OpenFlowSignUp
         string alreadyHaveAccountDisplay = string.Empty;
 
         [BeforeScenario]
-		public void InitializePage()
-		{
-			driver = new ChromeDriver("Users/rrajaraman/Documents/Selenium");
-			driver.Url = signInPage;
-			IWebElement registerLinkText = driver.FindElement(By.LinkText("Register"));
-			registerLinkText.Click();
-			driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
-
-            VerifyPageFormat();
-		}
-
-        public void VerifyPageFormat()
+        public void InitializePage()
         {
-			//Wekan logo
-			IWebElement logoImagePath = driver.FindElement(By.XPath("/html/body/section/h1/img"));
-			Assert.IsTrue(logoImagePath.Displayed);
-			string actualImageSrc = logoImagePath.GetAttribute("src");
-			Assert.AreEqual(expectedImageSrc, actualImageSrc);
-
-			//Page title
-			IWebElement formTitle = driver.FindElement(By.XPath("/html/body/section/section/div[1]/div[1]/h3"));
-			Assert.AreEqual("Create an Account", formTitle.Text);
-
-            //Username or email             IWebElement usernameField = driver.FindElement(By.Id("at-field-username"));             Assert.IsTrue(usernameField.Displayed);
-
-			//Email
-			IWebElement emailField = driver.FindElement(By.Id("at-field-email"));
-			Assert.IsTrue(emailField.Displayed);              //Password             IWebElement passwordField = driver.FindElement(By.Id("at-field-password"));             Assert.IsTrue(passwordField.Displayed);
-
-			//Register Button
-            IWebElement registerButton = driver.FindElement(By.Id("at-btn"));
-			Assert.IsTrue(registerButton.Displayed);
-            Assert.AreEqual("Register", registerButton.Text);
-
-			//Already have an account?
-			IWebElement alreadyHaveAccount = driver.FindElement(By.XPath("/html/body/section/section/div[1]/div[3]/p"));
-			Assert.IsTrue(alreadyHaveAccount.Displayed);
-			string alreadyHaveAccountText = alreadyHaveAccount.Text;
-			Assert.AreEqual("If you already have an account sign in", alreadyHaveAccountText);
-
-			//Language Dropdown
-			IWebElement languageOptions = driver.FindElement(By.XPath("/html/body/section/section/div[2]/select"));
-			Assert.IsTrue(languageOptions.Displayed);
-		}
+            driver = new ChromeDriver("Users/rrajaraman/Documents/Selenium");
+            driver.Url = signInPage;
+            IWebElement registerLinkText = driver.FindElement(By.LinkText("Register"));
+            registerLinkText.Click();
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+        }
 
 		[Given(@"I am on the sign-up page")]         public void GivenIAmOnTheSign_UpPage()         {           Assert.IsTrue(driver.FindElement(By.XPath("/html/body/section/section/div[1]/div[1]/h3")).Text.Equals("Create an Account"));         }
 
@@ -153,6 +120,67 @@ namespace OpenFlowSignUp
 			IWebElement signInButton = driver.FindElement(By.Id("at-signIn"));
             signInButton.Click();
 			driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+		}
+
+        [When(@"I select a Language from the dropdown (.*)")]
+		public void WhenISelectALanguageFromTheDropdown(int inputId)
+		{
+            languageId = inputId;
+            IWebElement languageField = driver.FindElement(By.ClassName("at-form-lang"));
+            languageField.FindElement(By.XPath($"/html/body/section/section/div[2]/select/option[{languageId}]")).Click();
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+
+			switch (languageId)
+			{
+				case 1:
+					pageTitle = "Buat Account";
+					userNameDisplay = "Username";
+					emailDisplay = "Email";
+					passwordDisplay = "Password";
+					registerButtonDisplay = "Mendaftar";
+					alreadyHaveAccountDisplay = "Jika Anda sudah punya akun sign in";
+					break;
+				case 5:
+					pageTitle = "Create an Account";
+					userNameDisplay = "Username";
+					emailDisplay = "Email";
+					passwordDisplay = "Password";
+					registerButtonDisplay = "Register";
+					alreadyHaveAccountDisplay = "If you already have an account sign in";
+					break;
+				case 11:
+					pageTitle = "Créer un compte";
+					userNameDisplay = "Nom d'utilisateur";
+					emailDisplay = "Email";
+					passwordDisplay = "Mot de passe";
+                    registerButtonDisplay = "S'enregistrer";
+					alreadyHaveAccountDisplay = "Si vous avez déjà un compte se connecter";
+					break;
+				case 21:
+					pageTitle = "Skapa ett konto";
+					userNameDisplay = "Användarnamn";
+					emailDisplay = "Email";
+					passwordDisplay = "Lösenord";
+					registerButtonDisplay = "Bli medlem";
+					alreadyHaveAccountDisplay = "Är du redan medlem? logga in";
+					break;
+				case 36:
+					pageTitle = "계정 생성";
+					userNameDisplay = "아이디";
+					emailDisplay = "Email";
+					passwordDisplay = "비밀번호";
+					registerButtonDisplay = "Register";
+					alreadyHaveAccountDisplay = "If you already have an account sign in";
+					break;
+				default:
+					pageTitle = "Create an Account";
+					userNameDisplay = "Username";
+					emailDisplay = "Email";
+					passwordDisplay = "Password";
+					registerButtonDisplay = "회원가입";
+					alreadyHaveAccountDisplay = "I이미 계정이 있으시면로그인";
+					break;
+			}
 		}          [Then(@"I should be signed-in")]         public void ThenIShouldBeSigned_In()         {
 			IWebElement userHeader = driver.FindElement(By.Id("header-user-bar"));
 			Assert.IsTrue(userHeader.FindElement(By.XPath("a")).Text.Contains(username));         }
@@ -210,6 +238,57 @@ namespace OpenFlowSignUp
 		{
             IWebElement formTitle = driver.FindElement(By.XPath("/html/body/section/section/div[1]/div[1]/h3"));
 			Assert.AreEqual("Sign In", formTitle.Text);
+		}
+
+		[Then(@"I should see the correct values for the other fields")]
+		public void ThenIShouldSeeTheCorrectValuesForTheOtherFields()
+		{
+            VerifyPageFormat();
+		}
+
+		public void VerifyPageFormat()
+		{
+            
+			//Wekan logo
+			IWebElement logoImagePath = driver.FindElement(By.XPath("/html/body/section/h1/img"));
+			Assert.IsTrue(logoImagePath.Displayed);
+			string actualImageSrc = logoImagePath.GetAttribute("src");
+			Assert.AreEqual(expectedImageSrc, actualImageSrc);
+
+			//Page title
+			IWebElement formTitle = driver.FindElement(By.XPath("/html/body/section/section/div[1]/div[1]/h3"));
+			Assert.IsTrue(formTitle.Displayed);
+            Assert.AreEqual(pageTitle, formTitle.Text);
+
+			//Username
+			IWebElement usernameField = driver.FindElement(By.Id("at-field-username"));
+			Assert.IsTrue(usernameField.Displayed);
+			//Assert.AreEqual(username, usernameField.Text);
+
+			//Email
+			IWebElement emailField = driver.FindElement(By.Id("at-field-email"));
+			Assert.IsTrue(emailField.Displayed);
+			//Assert.AreEqual(email, emailField.Text);
+
+			//Password
+			IWebElement passwordField = driver.FindElement(By.Id("at-field-password"));
+			Assert.IsTrue(passwordField.Displayed);
+			//Assert.AreEqual(password, passwordField.Text);
+
+			//Register Button
+			IWebElement registerButton = driver.FindElement(By.Id("at-btn"));
+			Assert.IsTrue(registerButton.Displayed);
+			//Assert.AreEqual(registerbutton, registerButton.Text);
+
+			//Already have an account?
+			IWebElement alreadyHaveAccount = driver.FindElement(By.XPath("/html/body/section/section/div[1]/div[3]/p"));
+			Assert.IsTrue(alreadyHaveAccount.Displayed);
+			string alreadyHaveAccountText = alreadyHaveAccount.Text;
+			//Assert.AreEqual(alreadyhaveaccount, alreadyHaveAccountText);
+
+			//Language Dropdown
+			IWebElement languageOptions = driver.FindElement(By.XPath("/html/body/section/section/div[2]/select"));
+			Assert.IsTrue(languageOptions.Displayed);
 		}
 
 		[AfterScenario]

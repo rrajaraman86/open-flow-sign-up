@@ -64,3 +64,17 @@ Scenario: Existing user
     Given I am on the sign-up page
     When I click on Sign In
     Then I should be taken to the sign-in page
+
+Scenario Outline: Language Selection
+    Given I am on the sign-up page
+    When I select a Language from the dropdown <id>
+    Then I should see the correct values for the other fields
+
+    Examples:
+    # Testing a subset
+    |id|
+    |1|
+    |5|
+    |11|
+    |21|
+    |36|
